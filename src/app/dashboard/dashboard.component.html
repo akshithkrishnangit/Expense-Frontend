@@ -1,0 +1,82 @@
+<div class="container mt-4">
+
+  <h2 class="text-center mb-4">💍 Marriage Expense Tracker</h2>
+
+  <!-- Budget -->
+  <div class="card p-3 mb-4 shadow">
+    <h5>Set Budget</h5>
+    <div class="d-flex gap-2">
+      <input type="number" [(ngModel)]="budgetInput" class="form-control" placeholder="Enter budget">
+      <button class="btn btn-primary" (click)="setBudget()">Save</button>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="row text-center mb-4">
+    <div class="col">
+      <div class="card p-3 shadow bg-light">
+        <h6>Total Budget</h6>
+        <h4>{{summary?.totalBudget}}</h4>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card p-3 shadow bg-light">
+        <h6>Total Spent</h6>
+        <h4>{{summary?.totalSpent}}</h4>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card p-3 shadow bg-light">
+        <h6>Remaining</h6>
+        <h4>{{summary?.remaining}}</h4>
+      </div>
+    </div>
+  </div>
+
+  <!-- Expense Table -->
+  <div class="card p-3 shadow">
+    <h5>Expenses</h5>
+
+    <table class="table table-striped mt-3">
+      <thead class="table-dark">
+        <tr>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Category</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let e of expenses">
+          <td>{{e.name}}</td>
+          <td>{{e.amount}}</td>
+          <td>{{e.category}}</td>
+          <td>{{e.date | date}}</td>
+          <td>
+            <button class="btn btn-sm btn-warning me-2" (click)="editExpense(e)">Edit</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteExpense(e.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Edit Form -->
+  <div *ngIf="selectedExpense" class="card p-3 mt-4 shadow">
+    <h5>Edit Expense</h5>
+
+    <input [(ngModel)]="selectedExpense.name" class="form-control mb-2" placeholder="Name">
+
+    <input type="number" [(ngModel)]="selectedExpense.amount" class="form-control mb-2" placeholder="Amount">
+
+    <input [(ngModel)]="selectedExpense.category" class="form-control mb-2" placeholder="Category">
+
+    <input type="date" [(ngModel)]="selectedExpense.date" class="form-control mb-3">
+
+    <button class="btn btn-success me-2" (click)="updateExpense()">Update</button>
+    <button class="btn btn-secondary" (click)="selectedExpense = null">Cancel</button>
+  </div>
+
+</div>
