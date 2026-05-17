@@ -6,32 +6,52 @@ import { Injectable } from '@angular/core';
 })
 export class ExpenseService {
 
-  private baseUrl = 'https://localhost:7291/api/expense';
+  private baseUrl = 'https://expense-backend-m5ff.onrender.com/api/expense';
 
   constructor(private http: HttpClient) { }
 
-  // GET expenses
-  getExpenses() {
-    return this.http.get(this.baseUrl + '/list');
+  // ---------------- GET EXPENSES (USER WISE) ----------------
+  getExpenses(userId: number) {
+    return this.http.get(
+      `${this.baseUrl}/list/${userId}`
+    );
   }
 
-  // POST add expense
+  // ---------------- ADD EXPENSE ----------------
   addExpense(data: any) {
-    return this.http.post(this.baseUrl + '/add', data);
+    return this.http.post(
+      `${this.baseUrl}/add`,
+      data
+    );
   }
 
-  // GET summary
-  getSummary() {
-    return this.http.get(this.baseUrl + '/summary');
+  // ---------------- GET SUMMARY (USER WISE) ----------------
+  getSummary(userId: number) {
+    return this.http.get(
+      `${this.baseUrl}/summary/${userId}`
+    );
   }
 
-setBudget(data: any) {
-  return this.http.post(this.baseUrl + '/set-budget', data);
-}
-deleteExpense(id: number) {
-  return this.http.delete(this.baseUrl + '/delete/' + id);
-}
-updateExpense(id: number, data: any) {
-  return this.http.put(this.baseUrl + '/update/' + id, data);
-}
+  // ---------------- SET BUDGET (USER WISE) ----------------
+  setBudget(data: any) {
+    return this.http.post(
+      `${this.baseUrl}/set-budget`,
+      data
+    );
+  }
+
+  // ---------------- DELETE EXPENSE ----------------
+  deleteExpense(id: number) {
+    return this.http.delete(
+      `${this.baseUrl}/delete/${id}`
+    );
+  }
+
+  // ---------------- UPDATE EXPENSE ----------------
+  updateExpense(id: number, data: any) {
+    return this.http.put(
+      `${this.baseUrl}/update/${id}`,
+      data
+    );
+  }
 }
