@@ -7,12 +7,22 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AddExpenseComponent } from './add-expense/add-expense.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
+import {
+  HTTP_INTERCEPTORS
+} from '@angular/common/http';
+
+import { AuthInterceptor }
+  from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    AddExpenseComponent
+    AddExpenseComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -20,7 +30,13 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
